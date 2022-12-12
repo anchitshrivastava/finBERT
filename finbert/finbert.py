@@ -600,7 +600,10 @@ def predict(text, model, write_to_csv=False, path=None, use_gpu=False, gpu_name=
     """
     model.eval()
 
-    sentences = sent_tokenize(text)
+    try:
+        sentences = sent_tokenize(text)
+    except TypeError:
+        sentences = text
 
     device = gpu_name if use_gpu and torch.cuda.is_available() else "cpu"
     logging.info("Using device: %s " % device)
